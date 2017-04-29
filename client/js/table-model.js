@@ -12,6 +12,9 @@ class TableModel {
     return this.data[this._getCellId(location)];
   }
   setValue(location, value) {
-    this.data[this._getCellId(locaton)] = value;
+    this.data[this._getCellId(location)] = value;
   }
 }
+
+
+module.exports = TableModel;
