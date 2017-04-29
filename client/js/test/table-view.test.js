@@ -23,6 +23,17 @@ describe('table-view', () => {
     document.documentElement.innerHTML = html;
   });
 
+  describe('table body', () => {
+    it('has the right size', () => {
+      //set up the initial state
+      //inspect the initial state
+    });
+    it('fills in values from the models', () => {
+      //set up the initial state
+      //inspect the initial state
+    });
+  })
+
   describe('table header', () => {
     it('has valid column header labels', () => {
       // set up the initial state
