@@ -38,7 +38,7 @@ class TableView {
         const td = createTD(value);
         tr.appendChild(td);
       }
-      fragment.append(tr);
+      fragment.appendChild(tr);
     }
     removeChildren(this.sheetBodyEl);
     this.sheetBodyEl.appendChild(fragment);

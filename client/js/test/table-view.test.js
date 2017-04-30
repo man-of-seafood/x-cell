@@ -1,9 +1,3 @@
-// need to load in the model so the view has something to render
-// need to load in the view so the model can be rendered
-// need to load fs so we can open up our fixture
-// then what we're doing is esentially creating a new html doc
-// and putting the fixture html inside it
-
 const fs = require('fs');
 const TableModel = require('../table-model');
 const TableView = require('../table-view');
@@ -26,11 +20,26 @@ describe('table-view', () => {
   describe('table body', () => {
     it('has the right size', () => {
       //set up the initial state
+      const numCols = 6;
+      const numRows = 10;
+      const model = new TableModel(numCols, numRows);
+      const view = new TableView(model);
+      view.init();
       //inspect the initial state
+      let ths = document.querySelectorAll('THEAD TH');
+      expect(ths.length).toBe(numCols);
     });
     it('fills in values from the models', () => {
       //set up the initial state
+
+      const model = new TableModel(3, 3);
+      const view = new TableView(model);
+      model.setValue({ col: 2, row: 1 }, '123');
+      view.init();
+
       //inspect the initial state
+      const trs = document.querySelectorAll('TBODY TR');
+      expect(trs[1].cells[2].textContent).toBe('123');
     });
   })
 
