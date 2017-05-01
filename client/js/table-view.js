@@ -96,7 +96,6 @@ class TableView {
   }
 
   addColumn(evt) {
-    evt.preventDefault();
     this.model.addCol();
     this.renderTable();
   }

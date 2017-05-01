@@ -15,9 +15,7 @@ class TableModel {
     this.data[this._getCellId(location)] = value;
   }
   addCol() {
-    console.log(this.numCols);
     this.numCols += 1;
-    console.log(this.numCols);
   }
 }
 
