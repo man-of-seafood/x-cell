@@ -17,6 +17,9 @@ class TableModel {
   addCol() {
     this.numCols += 1;
   }
+  addRow() {
+    this.numRows += 1;
+  }
 }
 
 
