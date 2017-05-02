@@ -117,7 +117,7 @@ describe('table-view', () => {
         sumRow = document.querySelector('TFOOT TR');
         let colSum = sumRow.cells[0].textContent;
         //console.log(sumRow.cells[0]);
-        expect(colSum).toBe('5');
+        expect(colSum).toBe('5'); // no matter what colSum always turns out to be "". 
       });
       it('produces a sum if the column contains numbers and non-numbers', () => {
         const model = new TableModel(5, 5);
