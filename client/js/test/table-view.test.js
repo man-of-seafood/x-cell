@@ -99,12 +99,12 @@ describe('table-view', () => {
     describe('table foot', () => {
       it('updates from the value of the cells in the col above it', () => {
         // set up initial state
-        let model = new TableModel(5, 5);
+        const model = new TableModel(5, 5);
         const view = new TableView(model);
         view.init();
         // inspect initial state
-        let sumRow = document.querySelector('TFOOT TR');
-        expect(sumRow.cells[0].textContent).toBe('');
+        const footCellsPre = document.querySelectorAll('TFOOT TD');
+        expect(footCellsPre[0].textContent).toBe('');
         // simulate user action -- inputting a '1' in every cell of 1st col
         const col = 0;
         for (let row = 0; row < model.numRows; row++) {
@@ -112,12 +112,10 @@ describe('table-view', () => {
           model.setValue(position, '1');
         }
         // inspect resulting state
-        view.renderTableBody();
         view.renderTableFoot();
-        sumRow = document.querySelector('TFOOT TR');
-        let colSum = sumRow.cells[0].textContent;
-        //console.log(sumRow.cells[0]);
-        expect(colSum).toBe('5'); // no matter what colSum always turns out to be "". 
+        const footCellsPost = document.querySelectorAll('TFOOT TD');
+        const colSum = footCellsPost[0].textContent;
+        expect(colSum).toBe('5');
       });
       it('produces a sum if the column contains numbers and non-numbers', () => {
         const model = new TableModel(5, 5);
