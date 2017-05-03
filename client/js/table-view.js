@@ -16,7 +16,10 @@ class TableView {
   initDomReferences() {
     this.headerRowEl = document.querySelector('THEAD TR');
     this.sheetBodyEl = document.querySelector('TBODY');
-    this.formulaBarEl = document.querySelector('#formula-bar')
+    this.footRowEl = document.querySelector('TFOOT TR');
+    this.formulaBarEl = document.querySelector('#formula-bar');
+    this.addColButton = document.querySelector('#add-col-button');
+    this.addRowButton = document.querySelector('#add-row-button');
   }
 
   initCurrentCell() {
@@ -37,6 +40,7 @@ class TableView {
   renderTable() {
     this.renderTableHeader();
     this.renderTableBody();
+    this.renderTableFoot();
   }
 
   renderTableHeader() {
@@ -72,15 +76,42 @@ class TableView {
     this.sheetBodyEl.appendChild(fragment);
   }
 
+  renderTableFoot() {
+    removeChildren(this.footRowEl);
+    for (let col = 0; col < this.model.numCols; col++) {
+      let colSum = 0;
+      for (let row = 0; row < this.model.numRows; row++) {
+        let currentVal = parseInt(this.model.getValue({ col: col, row: row }), 10);
+        if (!isNaN(currentVal)) {
+          colSum += currentVal;
+        }
+      }
+      this.footRowEl.appendChild(createTD(colSum));
+    }
+  }
+
   attachEventHandlers() {
     this.sheetBodyEl.addEventListener('click', this.handleSheetClick.bind(this));
     this.formulaBarEl.addEventListener('keyup', this.handleFormulaBarChange.bind(this));
+    this.addColButton.addEventListener('click', this.addColumn.bind(this));
+    this.addRowButton.addEventListener('click', this.addRow.bind(this));
+  }
+
+  addColumn(evt) {
+    this.model.addCol();
+    this.renderTable();
+  }
+
+  addRow(evt) {
+    this.model.addRow();
+    this.renderTable();
   }
 
   handleFormulaBarChange(evt) {
     const value = this.formulaBarEl.value;
     this.model.setValue(this.currentCellLocation, value);
     this.renderTableBody();
+    this.renderTableFoot();
   }
 
   handleSheetClick(evt) {

@@ -14,6 +14,12 @@ class TableModel {
   setValue(location, value) {
     this.data[this._getCellId(location)] = value;
   }
+  addCol() {
+    this.numCols += 1;
+  }
+  addRow() {
+    this.numRows += 1;
+  }
 }
 
 

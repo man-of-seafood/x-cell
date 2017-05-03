@@ -96,7 +96,49 @@ describe('table-view', () => {
       const trs = document.querySelectorAll('TBODY TR');
       expect(trs[1].cells[2].textContent).toBe('123');
     });
-  })
+    describe('table foot', () => {
+      it('updates from the value of the cells in the col above it', () => {
+        // set up initial state
+        const model = new TableModel(5, 5);
+        const view = new TableView(model);
+        view.init();
+        // inspect initial state
+        const footCellsPre = document.querySelectorAll('TFOOT TD');
+        expect(footCellsPre[0].textContent).toBe('');
+        // simulate user action -- inputting a '1' in every cell of 1st col
+        const col = 0;
+        for (let row = 0; row < model.numRows; row++) {
+          const position = { col: col, row: row };
+          model.setValue(position, '1');
+        }
+        // inspect resulting state
+        view.renderTableFoot();
+        const footCellsPost = document.querySelectorAll('TFOOT TD');
+        const colSum = footCellsPost[0].textContent;
+        expect(colSum).toBe('5');
+      });
+      it('produces a sum if the column contains numbers and non-numbers', () => {
+        // set up initial state
+        const model = new TableModel(5, 5);
+        const view = new TableView(model);
+        view.init();
+        const col = 0; 
+        for(let row = 0; row < model.numRows; row++) {
+          const position = {col: col, row: row};
+          model.setValue(position, 'oh frabjous day!');
+        }
+        // inspect initial state
+        const footCellsPre = document.querySelectorAll('TFOOT TD');
+        expect(footCellsPre[0].textContent).toBe('');
+        // simulate user action -- replace one string with a number
+        model.setValue({col: 0, row: 1}, '123');
+        view.renderTableFoot();
+        // inspect resulting state
+        const footCellsPost = document.querySelectorAll('TFOOT TD');
+        expect(footCellsPost[0].textContent).toBe('123');
+      })
+    });
+  });
 
   describe('table header', () => {
     it('has valid column header labels', () => {
